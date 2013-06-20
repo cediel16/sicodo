@@ -1,0 +1,174 @@
+root { 
+    display: block;
+}
+html, body {
+    background: url("../img/bg.jpg") repeat-x scroll 0 0 #EAEAEA;
+    font-family: tahoma,sans,arial;
+    font-size: 12px;
+    margin: 0;
+}
+
+.pull-center{
+    text-align: center;
+}
+
+.contenedor-principal{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #C7C7C7;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 0 5px #BBBBBB;
+    min-height: 200px;
+    margin:10px;
+}
+
+
+.contenido-principal{
+    padding:10px;
+}
+
+.banner{
+    background: #F1F1F1;
+    color:#666666;
+}
+
+.banner ul{
+    height:30px;
+    list-style:none;
+    margin:0px;
+    padding:0px 15px 0px 15px;
+
+
+}
+
+.banner li{
+    float: left;
+    padding:0px;
+    font-size:12px;
+    border:0px solid red;
+    line-height: 29px;
+}
+
+.banner li:last-child{
+    float:right;
+    line-height: 28px;
+}
+
+.banner .logo{
+    margin:4px 5px 4px 15px;
+    padding:0px;
+}
+
+
+.banner .title{
+    margin-left:0px;
+}
+
+.banner .user{
+    float: right;
+}
+
+.titlebar{
+    border-bottom:1px solid #c7c7c7;
+    padding:10px 10px 14px 10px;
+    color:#666666;
+    background:#fafafa;
+    border-radius:4px 4px 0px 0px;
+}
+
+.titlebar ul{
+    padding:0px;
+    margin:0px;
+    list-style:none;
+    height:20px;
+}
+
+.titlebar .title{
+    float:left;
+    line-height: 24px;
+    font-size: 18px;
+}
+
+.titlebar .search{
+    float:right;
+    line-height: 24px;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.header-login-phone{
+    display: none;
+}
+
+@media screen and (max-width:797px) {
+
+    body{
+        background:#F1F1F1;
+    }
+
+    .contenedor-principal{
+        margin:10px 0px 10px 0px;
+    }
+
+    .banner{
+        background:#F1F1F1;
+    }
+
+    .header-login{
+        display: none;
+    }
+    .header-login-phone{
+        display: block;
+    }
+}
+
+.basic-grid{
+    border:1px solid #DDDDDD;
+    height: 400px;
+    overflow-y: auto;
+    padding:2px;
+    border-radius: 4px;
+}
+
+.cargando{
+    display: none;
+}
+
+.cargando_lista{
+    text-align: center;
+    padding-top:50px;
+}
+
+#form_estaciones{
+    padding:0px;
+    margin:0px;
+}
+
+.notifications {
+    position: fixed;
+}
+
+.notifications.top-center {
+    left: 0;
+    top: 0;
+    width: 96%;
+    margin-top:20px;
+    margin-left:2%;
+    margin-right:2%;
+}
+
+.table a{
+    text-decoration: none;
+    color:inherit;
+}
+
+.orden{
+    width:36px;
+    height:36px;
+    text-align:center;
+    line-height: 35px;
+    font-size:18px;
+    font-weight: bold;
+    background: #EEEEEE;
+}
