@@ -114,15 +114,15 @@ class usuarios {
         return $r;
     }
 
-    public static function esta_cedula_disponible($ci) {
-        if ($ci == '')
+    public static function esta_cedula_disponible($arg) {
+        if ($arg == '')
             return FALSE;
         $db = new base();
         $db->db_query("
-    select 1
-    from usuarios 
-    where cedula='$arg'
-    ");
+        select 1
+        from usuarios 
+        where cedula='$arg'
+        ");
         return count($db->data) == 0;
     }
 
@@ -185,7 +185,6 @@ class usuarios {
         ");
         return $db->data;
     }
-
 
     public static function obtener_lista_roles_para_filtrar() {
         $db = new base();

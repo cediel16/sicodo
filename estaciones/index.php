@@ -6,12 +6,14 @@ $unidades = unidades::obtener_filas();
 $cargos = cargos::obtener_filas();
 $usuarios = usuarios::obtener_filas();
 $estaciones = estaciones::obtener_filas();
+
+sesiones::has_permission('estaciones.acceso');
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Control de documentos</title>
+        <title><?php echo tag_title() ?></title>
         <?php include_once '../tpl/link.php'; ?>
     </head>
     <body>

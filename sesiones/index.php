@@ -6,7 +6,7 @@ if (count($post) > 0) {
         redirect();
     } else {
 
-        $msg = 'Usuario o contraseña inválidos';
+        $msg = '<div class="alert alert-error">Correo institucional o contraseña inválidos</div>';
     }
 }
 ?>
@@ -14,12 +14,11 @@ if (count($post) > 0) {
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Control de documentos</title>
+        <title><?php echo tag_title() ?></title>
 
         <link rel="icon" href="/favicon.ico"/>
         <link rel="shortcut icon" href="/favicon.ico"/>
         <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon"/>
-        <script src="js/jquery.min.js" type="text/javascript"></script>
 
         <link rel="stylesheet" type="text/css" media="screen" href="../css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css" />
@@ -29,10 +28,9 @@ if (count($post) > 0) {
             <div class="row-fluid">
                 <div class="span6 offset1 well">
                     <div class="header-login">
-                        <legend>Control de documentos</legend>
-                        <p>Aqui va una descripción breve de la usabilidad del sistema.</p>
+                        <legend>Sistema Integral para el Control de documentos</legend>
                     </div>
-                    <h4 class="header-login-phone">Control de documentos</h4>
+                    <h4 class="header-login-phone">Sistema Integral para el Control de documentos</h4>
                 </div>
                 <div class="span4 well">
                     <legend>Inicio de sesión</legend>
@@ -40,7 +38,7 @@ if (count($post) > 0) {
                         <div class="control-group">
                             <!-- Username -->
                             <div class="controls">
-                                <input class="span12" type="text" id="username" name="username" placeholder="Usuario" class="span4">
+                                <input class="span12" type="text" id="username" name="username" placeholder="Correo institucional" class="span4">
                             </div>
                         </div>
                         <div class="control-group">

@@ -109,5 +109,9 @@ function sumar_horas($timestamp,$horas) {
     return $timestamp;
 }
 
+function tag_title(){
+    return 'Sicodo';
+}
+
 
 ?>

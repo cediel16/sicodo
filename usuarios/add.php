@@ -5,6 +5,7 @@ sesiones::has_permission('usuarios.insertar');
 $roles = roles::obtener_filas();
 
 $band = 1;
+usuarios::esta_cedula_disponible(var_post('cedula'));
 if (count(var_post()) > 0) {
     if (!es_cedula(var_post('cedula'))) {
         $msj_cedula = text('error', 'La cédula es inválida.');
@@ -54,7 +55,8 @@ if (count(var_post()) > 0) {
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Control de documentos</title>
+        
+        <title><?php echo tag_title() ?></title>
 
         <?php include_once base_url() . '/tpl/link.php'; ?>
     </head>

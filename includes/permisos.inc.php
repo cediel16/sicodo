@@ -9,17 +9,17 @@ class permisos {
 
     public static function edit($data) {
         $db = new base();
-        return $db->db_update('roles', array('rol' => $data['rol']), "id='" . $data['id'] . "'") === 1;
+        return $db->db_update('permisos', array('permiso' => $data['permiso'], 'descripcion' => $data['descripcion']), "id='" . $data['id'] . "'") === 1;
     }
 
-    public static function del($rol_id) {
+    public static function del($permiso_id) {
         $db = new base();
-        return $db->db_update('roles', array('status' => 'eliminado'), "id='" . $rol_id . "'") === 1;
+        return $db->db_update('permisos', array('status' => 'eliminado'), "id='" . $permiso_id . "'") === 1;
     }
 
-    public static function act($rol_id) {
+    public static function act($permiso_id) {
         $db = new base();
-        return $db->db_update('roles', array('status' => 'activo'), "id='" . $rol_id . "'") === 1;
+        return $db->db_update('permisos', array('status' => 'activo'), "id='" . $permiso_id . "'") === 1;
     }
 
     public static function lista() {
@@ -64,9 +64,9 @@ class permisos {
             $r.='<div class="btn-group pull-right">';
             $r.='<button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">Acciones <span class="caret"></span></button>';
             $r.='<ul class="dropdown-menu">';
-            $r.='<li><a href="' . site_url() . '/roles/edit.php?var=' . $db->fields['id'] . '">Editar</a></li>';
+            $r.='<li><a href="' . site_url() . '/permisos/edit.php?var=' . $db->fields['id'] . '">Editar</a></li>';
             if ($db->fields['status'] == 'activo') {
-                $r.='<li><a href="' . site_url() . '/roles/permisos.php?var=' . $db->fields['id'] . '">Desactivar</a></li>';
+                $r.='<li><a href="javascript:void(0);" onclick="javascript:del(' . $db->fields['id'] . ');">Eliminar</a></li>';
             } elseif ($db->fields['status'] == 'eliminado') {
                 $r.='<li><a href="javascript:void(0);" onclick="javascript:act(' . $db->fields['id'] . ');">Activar</a></li>';
             }
@@ -123,14 +123,14 @@ class permisos {
         return count($db->data) == 0;
     }
 
-    public static function esta_rol_disponible_al_editar($id, $rol) {
-        if ($rol == '')
+    public static function esta_permiso_disponible_al_editar($id, $permiso) {
+        if ($permiso == '')
             return FALSE;
         $db = new base();
         $db->db_query("
         select 1
-        from roles 
-        where lower(rol)='" . strtolower($rol) . "'
+        from permisos 
+        where lower(permiso)='" . strtolower($permiso) . "'
         and id<>$id
         ");
         return count($db->data) == 0;
@@ -140,7 +140,7 @@ class permisos {
         $db = new base();
         $db->db_query("
         select *
-        from roles 
+        from permisos 
         where id=$id
         ");
         return $db->data[0];

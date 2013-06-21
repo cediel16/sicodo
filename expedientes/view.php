@@ -1,16 +1,16 @@
 <?php
 require_once '../config.php';
 sesiones::logged_in();
-sesiones::has_permission('documentos.acceso');
-$doc = documentos::obtener_vista(var_get('var'));
+sesiones::has_permission('expedientes.acceso');
+$doc = expedientes::obtener_vista(var_get('var'));
 
-$movimientos = documentos::obtener_vista_movimientos($doc['id']);
+$movimientos = expedientes::obtener_vista_movimientos($doc['id']);
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Control de documentos</title>
+        <title><?php echo tag_title() ?></title>
         <?php include_once '../tpl/link.php'; ?>
     </head>
     <body>
@@ -21,7 +21,7 @@ $movimientos = documentos::obtener_vista_movimientos($doc['id']);
             <div class="titlebar">
                 <ul>
                     <li class="title">
-                        Control de documentos
+                        Expediente
                     </li>
                     <li class="search">
                     </li>
@@ -107,7 +107,7 @@ $movimientos = documentos::obtener_vista_movimientos($doc['id']);
                                                         <?php } ?>
                                                     <?php } else { ?>
 
-                                                        <?php $resp = documentos::obtener_respuesta_por_movimiento($movimientos[$i]['id']); ?>
+                                                        <?php $resp = expedientes::obtener_respuesta_por_movimiento($movimientos[$i]['id']); ?>
                                                         <?php if (is_array($resp)) { ?>
                                                             <div class = "span12">
                                                                 <div style = "font-size:18px;" class = "span12">
@@ -141,6 +141,6 @@ $movimientos = documentos::obtener_vista_movimientos($doc['id']);
             </div>
         </section>
         <?php include_once '../tpl/script.php'; ?>
-        <script src="<?php echo site_url() ?>/js/documentos.js"></script>
+        <script src="<?php echo site_url() ?>/js/expedientes.js"></script>
     </body>
 </html>

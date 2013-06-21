@@ -1,3 +1,30 @@
+function del(ruta_id) {
+    if (confirm('¿Estás seguro que deseas eliminar esta ruta?')) {
+        $.ajax({
+            type: "POST",
+            url: 'ajax.php',
+            dataType: 'json',
+            data: 'ruta_id=' + ruta_id + '&band=del',
+            success: function(data) {
+                if (data.resp === 1) {
+                    flash_type = 'info';
+                    $("#ruta").val('');
+                    $("#lista").html(data.lista);
+                } else if (data.resp === 2) {
+                    flash_type = 'block';
+                } else {
+                    flash_type = 'error';
+                }
+                flashdata(flash_type, data.msj);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                flashdata('error', textStatus.toUpperCase() + ' ' + xhr.status + ' - ' + errorThrown);
+                alert(textStatus.toUpperCase() + ' ' + xhr.status + ' - ' + errorThrown);
+            }
+        });
+    }
+}
+
 $(document).ready(function(e) {
     $("#form_add").submit(function() {
         $.ajax({
@@ -49,7 +76,7 @@ $(document).ready(function(e) {
         $(".cargando").css('display', 'none');
         $("#ruta").removeAttr("readonly");
         $("#btn_volver").removeAttr("disabled");
-        $("#btn_editar").removeAttr("disabled"  );
+        $("#btn_editar").removeAttr("disabled");
         return false;
     });
 

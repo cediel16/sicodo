@@ -222,6 +222,7 @@ $(document).ready(function(e) {
     $("#btn_volver").click(function() {
         window.location = '.';
     });
+    
     $("#ruta").change(function() {
         if ($(this).val() === '') {
             form_estaciones(false);

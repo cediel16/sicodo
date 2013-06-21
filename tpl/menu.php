@@ -8,7 +8,7 @@
             </button>
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li><a href="<?php echo site_url() ?>/documentos">Documentos</a></li>
+                    <li><a href="<?php echo site_url() ?>/expedientes">Expedientes</a></li>
                     <?php if (sesiones::is_has_permission('unidades.acceso') || sesiones::is_has_permission('cargos.acceso') || sesiones::is_has_permission('rutas.acceso') || sesiones::is_has_permission('estaciones.acceso')) { ?>
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">Definiciones <b class="caret"></b></a>
@@ -20,10 +20,10 @@
                                     <li><a href="<?php echo site_url() ?>/cargos">Cargos</a></li>
                                 <?php } ?>
                                 <?php if (sesiones::is_has_permission('rutas.acceso')) { ?>
-                                    <li><a href="<?php echo site_url() ?>/rutas">Rutas de documentos</a></li>
+                                    <li><a href="<?php echo site_url() ?>/rutas">Rutas de expedientes</a></li>
                                 <?php } ?>
                                 <?php if (sesiones::is_has_permission('estaciones.acceso')) { ?>
-                                    <li><a href="<?php echo site_url() ?>/estaciones">Estaciones</a></li>
+                                    <li><a href="<?php echo site_url() ?>/estaciones">Estadiones de ruta</a></li>
                                 <?php } ?>
                             </ul>
                         </li>

@@ -6,7 +6,7 @@ $data = var_post();
 
 switch ($data['band']) {
     case 'add_resp': {
-            if (documentos::add_resp($data)) {
+            if (expedientes::add_resp($data)) {
                 $json = array(
                     'resp' => 1
                 );

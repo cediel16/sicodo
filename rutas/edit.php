@@ -13,7 +13,7 @@ if(!is_array($data)){
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Control de documentos</title>
+        <title><?php echo tag_title() ?></title>
         <?php include_once '../tpl/link.php'; ?>
     </head>
     <body>
@@ -25,9 +25,6 @@ if(!is_array($data)){
                 <ul>
                     <li class="title">
                         Editar ruta del documento
-                    </li>
-                    <li class="search">
-                        <a href="<?php echo site_url() ?>/estaciones/?var=<?php echo $data['id'] ?>" class="btn"><i class="icon-edit"></i> Editar estaciones</a>
                     </li>
                 </ul>
             </div>

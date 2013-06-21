@@ -15,5 +15,5 @@ require_once 'includes/rutas.inc.php';
 require_once 'includes/estaciones.inc.php';
 require_once 'includes/roles.inc.php';
 require_once 'includes/permisos.inc.php';
-require_once 'includes/documentos.inc.php';
+require_once 'includes/expedientes.inc.php';
 ?>

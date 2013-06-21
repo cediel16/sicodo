@@ -1,7 +1,7 @@
 <?php
 require_once '../config.php';
 sesiones::logged_in();
-sesiones::has_permission('documentos.insertar');
+sesiones::has_permission('expedientes.insertar');
 $rutas = rutas::obtener_filas();
 
 $band = 1;
@@ -12,29 +12,29 @@ if (count(var_post()) > 0) {
     }
 
     if (var_post('codigo') == '') {
-        $msj_codigo = text('error', 'Escriba el código identificador del documento.');
+        $msj_codigo = text('error', 'Escriba el código identificador del expediente.');
         $band = 0;
-    } elseif (!documentos::esta_codigo_disponible(var_post('id'), var_post('codigo'))) {
+    } elseif (!expedientes::esta_codigo_disponible(var_post('id'), var_post('codigo'))) {
         $msj_codigo = text('error', 'El codigo identificador no está disponible.');
         $band = 0;
     }
 
     if (var_post('titulo') == '') {
-        $msj_titulo = text('error', 'Escriba el titulo del documento.');
+        $msj_titulo = text('error', 'Escriba el titulo del expediente.');
         $band = 0;
     }
 
     if (var_post('descripcion') == '') {
-        $msj_descripcion = text('error', 'Escriba una descripción breve del documento.');
+        $msj_descripcion = text('error', 'Escriba una descripción breve del expediente.');
         $band = 0;
     }
 
     if ($band) {
-        if (documentos::add(var_post())) {
-            set_flashdata('info', 'Se ha añadido un nuevo documento con éxito.');
-            redirect('documentos');
+        if (expedientes::add(var_post())) {
+            set_flashdata('info', 'Se ha añadido un nuevo expediente con éxito.');
+            redirect('expedientes');
         } else {
-            set_flashdata('error', 'Error al intentar añadir un nuevo documento.');
+            set_flashdata('error', 'Error al intentar añadir un nuevo expediente.');
         }
     }
 }
@@ -43,7 +43,7 @@ if (count(var_post()) > 0) {
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Control de documentos</title>
+        <title><?php echo tag_title() ?></title>
 
         <?php include_once base_url() . '/tpl/link.php'; ?>
     </head>
@@ -55,7 +55,7 @@ if (count(var_post()) > 0) {
             <div class="titlebar">
                 <ul>
                     <li class="title">
-                        Añadir documento
+                        Añadir expediente
                     </li>
                     <li class="search">
                     </li>
@@ -113,13 +113,12 @@ if (count(var_post()) > 0) {
                         </div>
                     </div>
                     <div class="form-actions">
-                        <a href="<?php echo site_url() ?>/documentos" class="btn">Cancelar</a>
+                        <a href="<?php echo site_url() ?>/expedientes" class="btn">Cancelar</a>
                         <input type="submit" class="btn btn-primary" value="Aceptar" />
                     </div>
                 </form>
             </div>
         </section>
         <?php include_once base_url() . '/tpl/script.php'; ?>
-        <script src="<?php echo site_url() ?>/js/documentos.js"></script>
     </body>
 </html>

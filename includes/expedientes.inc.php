@@ -1,6 +1,6 @@
 <?php
 
-class documentos {
+class expedientes {
 
     public static function add($data) {
         $db = new base();
@@ -13,12 +13,12 @@ class documentos {
         $data['ruta_fkey'] = $data['ruta'];
         $data['timestamp'] = time();
         unset($data['ruta']);
-        if (!$db->db_insert('documentos', $data)) {
+        if (!$db->db_insert('expedientes', $data)) {
             return FALSE;
             $db->db_query('ROLLBACK');
         };
 
-        $db->db_query("select last_value from documentos_id_seq");
+        $db->db_query("select last_value from expedientes_id_seq");
         $doc_id = $db->data[0]['last_value'];
 
         if (!$rst = $db->db_query("select * from estaciones where ruta_fkey = '$data[ruta_fkey]' order by orden")) {
@@ -85,7 +85,7 @@ class documentos {
         }
 
         if ($db->fields['total'] == 0) {
-            if ($db->db_update("documentos", array('status' => 'finalizado'), "id=(select documento_fkey from movimientos where id=" . $data['movimiento_fkey'] . ")") < 0) {
+            if ($db->db_update("expedientes", array('status' => 'finalizado'), "id=(select documento_fkey from movimientos where id=" . $data['movimiento_fkey'] . ")") < 0) {
                 $db->db_query('ROLLBACK');
                 return FALSE;
             }
@@ -119,7 +119,7 @@ class documentos {
             a.timestamp,
             (select count(1) from movimientos where documento_fkey=a.id and ejecutado='si') as ejecutado,
             (select count(1) from movimientos where documento_fkey=a.id) as a_ejecutar
-            from documentos a
+            from expedientes a
             inner join rutas b on b.id=a.ruta_fkey
             and a.status='$status'
             $busqueda
@@ -150,8 +150,8 @@ class documentos {
             }
             $r.='<td><span class="pull-right">' . status($option, $db->fields['ejecutado'] . ' de ' . $db->fields['a_ejecutar']) . '</span></td>';
             $r.='<td>' . status($option, $db->fields['status']) . '</span></td>';
-            $r.='<td><a href="' . site_url() . '/documentos/view.php?var=' . $db->fields['documento_id'] . '">' . $db->fields['codigo'] . ' ' . $db->fields['titulo'] . ' - <span class="muted">' . $db->fields['descripcion'] . '</span></a></td>';
-            $r.='<td>' . documentos::fecha($db->fields['timestamp']) . '</td>';
+            $r.='<td><a href="' . site_url() . '/expedientes/view.php?var=' . $db->fields['documento_id'] . '">' . $db->fields['codigo'] . ' ' . $db->fields['titulo'] . ' - <span class="muted">' . $db->fields['descripcion'] . '</span></a></td>';
+            $r.='<td>' . expedientes::fecha($db->fields['timestamp']) . '</td>';
             $r.='</tr>';
             $db->db_move_next();
         }
@@ -164,7 +164,7 @@ class documentos {
         $db = new base();
         $db->db_query("
             select 1
-            from documentos
+            from expedientes
             where codigo='$arg'
             ");
         return count($db->data) == 0;
@@ -184,7 +184,7 @@ class documentos {
         $db = new base();
         $db->db_query("
             select *
-            from documentos 
+            from expedientes 
             where id=$id
         ");
         return $db->data[0];
@@ -207,7 +207,7 @@ class documentos {
             (select sum(horas) from movimientos where documento_fkey=a.id) as horas,
             (select sum(horas) from movimientos where documento_fkey=a.id)/24 as dias
             
-            from documentos a
+            from expedientes a
             inner join rutas b on b.id=a.ruta_fkey
             where a.id=$id
             ";

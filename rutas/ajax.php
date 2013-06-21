@@ -54,6 +54,22 @@ switch ($data['band']) {
             }
             break;
         }
+    case 'del': {
+            if (rutas::del($data['ruta_id'])) {
+                $json = array(
+                    'resp' => 1,
+                    'msj' => 'La ruta se ha eliminado con éxito.',
+                    'lista'=>rutas::lista()
+                    
+                );
+            } else {
+                $json = array(
+                    'resp' => 2,
+                    'msj' => 'Error al intentar eliminar la ruta.'
+                );
+            }
+            break;
+        }
 }
 
 echo json_encode($json);

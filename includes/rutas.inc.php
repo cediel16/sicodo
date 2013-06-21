@@ -7,6 +7,29 @@ class rutas {
         return $db->db_insert('rutas', $data) === 1;
     }
 
+    public static function del($ruta_id) {
+        if (!is_numeric($ruta_id)) {
+            return FALSE;
+        }
+
+        $db = new base();
+        if (!$db->db_query('BEGIN')) {
+            return FALSE;
+        }
+
+        if (!$db->db_query("delete from estaciones where ruta_fkey=$ruta_id")) {
+            $db->db_query('ROLLBACK');
+            return FALSE;
+        }
+
+        if (!$db->db_query("delete from rutas where id=$ruta_id")) {
+            $db->db_query('ROLLBACK');
+            return FALSE;
+        }
+        $db->db_query('COMMIT');
+        return TRUE;
+    }
+
     public static function edit($data) {
         $db = new base();
         return $db->db_update('rutas', array('ruta' => $data['ruta']), "id='" . $data['id'] . "'") === 1;
@@ -50,10 +73,10 @@ class rutas {
                 $r.='<button data-toggle="dropdown" class="btn btn-mini dropdown-toggle">Acciones <span class="caret"></span></button>';
                 $r.='<ul class="dropdown-menu">';
                 if (sesiones::is_has_permission('rutas.editar')) {
-                    $r.='<li><a href="' . site_url() . '/rutas/edit.php?var=' . $db->fields['id'] . '">Editar nombre de la ruta</a></li>';
+                    $r.='<li><a href="' . site_url() . '/rutas/edit.php?var=' . $db->fields['id'] . '">Editar</a></li>';
                 }
                 if (sesiones::is_has_permission('rutas.eliminar')) {
-                    $r.='<li><a href="javascript:void(0);">Eliminar</a></li>';
+                    $r.='<li><a href="javascript:void(0);" onclick="del(' . $db->fields['id'] . ')">Eliminar</a></li>';
                 }
                 $r.='</ul>';
                 $r.='</div>';

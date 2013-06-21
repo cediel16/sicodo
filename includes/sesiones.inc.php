@@ -26,14 +26,14 @@ class sesiones {
     }
 
     public static function set_userdata($arg) {
-        $_SESSION['userdata'] = $arg;
+        $_SESSION['sicodo'] = $arg;
     }
 
     public static function userdata($arg = '') {
         if ($arg == '') {
-            return $_SESSION['userdata'];
+            return $_SESSION['sicodo'];
         } else {
-            return $_SESSION['userdata'][$arg];
+            return $_SESSION['sicodo'][$arg];
         }
     }
 
@@ -60,7 +60,7 @@ class sesiones {
           inner join roles b on b.id=a.rol_fkey
           inner join roles_permisos c on c.rol_fkey=b.id
           inner join permisos d on d.id=c.permiso_fkey
-          and lower(permiso)='$p'
+          and lower(permiso)=(select lower(permiso) from permisos where permiso='$p' and status='activo')
           and a.id=" . sesiones::userdata('id');
         if (!$db->db_query($qry)) {
             return FALSE;

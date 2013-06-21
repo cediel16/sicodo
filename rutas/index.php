@@ -7,7 +7,7 @@ sesiones::logged_in();
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Control de documentos</title>
+        <title><?php echo tag_title() ?></title>
         <?php include_once '../tpl/link.php'; ?>
     </head>
     <body>
@@ -18,7 +18,7 @@ sesiones::logged_in();
             <div class="titlebar">
                 <ul>
                     <li class="title">
-                        Rutas de documentos
+                        Rutas de expedientes
                     </li>
                     <li class="search">
                     </li>
@@ -28,7 +28,7 @@ sesiones::logged_in();
                 <div id="flashdata"></div>
                 <?php if (sesiones::is_has_permission('rutas.insertar')) { ?>
                     <form id="form_add" action="ajax.php" class="form-inline" method="post">
-                        <input type="text" class="span4" placeholder="Añadir ruta de documento" name="ruta" id="ruta">
+                        <input type="text" class="span4" placeholder="Añadir ruta de expediente" name="ruta" id="ruta">
                     </form>
                 <?php } ?>
                 <div id="lista" class="tabbable basic-grid">
