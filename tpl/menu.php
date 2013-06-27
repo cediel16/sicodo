@@ -30,6 +30,7 @@
                     <?php } ?>
                 </ul>
                 <ul class="nav pull-right">
+                    <li><a href="<?php echo site_url() ?>/soporte"><i class="icon-question-sign"></i> Soporte</a></li>
                     <?php if (sesiones::is_has_permission('usuarios.acceso') || sesiones::is_has_permission('roles.acceso') || sesiones::is_has_permission('permisos.acceso')) { ?>
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">Administración de acceso<b class="caret"></b></a>

@@ -1,18 +1,6 @@
 <?php
 
-function es_dia_laborable($timestamp) {
-    $feriados = array(
-        '24-06',
-        '05-07'
-    );
-    // 0: Domingo ; 6: Sábado
-    if (date('w', $timestamp) == 0 || date('w', $timestamp) == 6) {
-        return FALSE;
-    } elseif (in_array(date('d-m', $timestamp), $feriados)) {
-        return FALSE;
-    }
-    return TRUE;
-}
+
 
 function sumar_dias($timestamp, $dias) {
     $seg_x_dia = 86400;
@@ -26,7 +14,7 @@ function sumar_dias($timestamp, $dias) {
     return $timestamp;
 }
 
-$ruta = 9;
+$ruta = 1;
 $inicio = strtotime('2013-06-21');
 $fin = sumar_dias($inicio, $ruta);
 

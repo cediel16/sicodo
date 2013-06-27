@@ -1,12 +1,10 @@
 <?php
 require_once '../config.php';
 sesiones::logged_in();
-sesiones::has_permission('rutas.editar');
-
-$data = rutas::obtener_fila(var_get('var'));
-
-if (!is_array($data)) {
-    redirect('rutas');
+sesiones::has_permission('unidades.editar');
+$data = unidades::obtener_fila(var_get('var'));
+if(!is_array($data)){
+    redirect('unidades');
 }
 ?>
 <!DOCTYPE html>
@@ -24,17 +22,17 @@ if (!is_array($data)) {
             <div class="titlebar">
                 <ul>
                     <li class="title">
-                        Editar ruta del documento
+                        Editar unidad
                     </li>
                 </ul>
             </div>
             <div class="contenido-principal">
                 <div id="flashdata"></div>
-                <form id="form_edit" action="ajax.php" class="form-vertical" method="post">
+                <form id="form_edit" action="ajax.php" class="form-inline" method="post">
                     <div class="control-group">
                         <div class="controls">
                             <input type="hidden" id="id" name="id" value="<?php echo $data['id'] ?>">
-                            <input type="text" class="span5" id="ruta" name="ruta" value="<?php echo $data['ruta'] ?>" />
+                            <input type="text" class="span5" id="unidad" name="unidad" value="<?php echo $data['unidad'] ?>" />
                             <span class="cargando"><img src="../img/cargando.gif" /></span>
                         </div>
                     </div>

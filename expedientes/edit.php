@@ -19,7 +19,7 @@ $data = unidades::obtener_fila(var_get('var'));
             <div class="titlebar">
                 <ul>
                     <li class="title">
-                        Editar unidad
+                        Editar expediente
                     </li>
                 </ul>
             </div>

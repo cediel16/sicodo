@@ -99,19 +99,26 @@ function fecha($formato, $timestamp) {
     return str_replace($buscar, $reemplazar, date($formato, $timestamp));
 }
 
-function sumar_horas($timestamp,$horas) {
-    //       60 segundos = 1 minuto
-    //     3600 segundos = 1 hora
-    //    86400 segundos = 1 dia
-    //  2678400 segundos = 1 mes
-    // 31536000 segundos = 1 año
-    $timestamp=$timestamp+($horas*(3600));
-    return $timestamp;
-}
-
-function tag_title(){
+function tag_title() {
     return 'Sicodo';
 }
 
-
+function btn_diferencia_respuesta($num) {
+    if ($num <= 0) {
+        $class_icon = 'icon-thumbs-up';
+        $btn='btn-success';
+        $data_original_title='Respuesta a tiempo';
+    } else {
+        $class_icon = 'icon-thumbs-down';
+        $btn='btn-danger';
+        $data_original_title='Respuesta fuera de tiempo';
+    }
+    $r.='<span class="btn btn-mini '.$btn.' exp_diferencia_tiempo" data-placement="bottom" data-toggle="tooltip" data-original-title="'.$data_original_title.'">';
+    $r.= '<i class = "' . $class_icon . '"></i> '.abs($num) .' horas';
+    $r.='<strong>';
+    $r.='';
+    $r.='</strong>';
+    $r.='</span>';
+    return $r;
+}
 ?>

@@ -1,4 +1,17 @@
 $(document).ready(function(e) {
+
+    //
+    $('#exp_fecha_inicio').tooltip();
+    $('#exp_fecha_fin').tooltip();
+    $('#exp_horas').tooltip();
+    $('#exp_rutas').tooltip();
+    $('#exp_status').tooltip();
+
+    $('.exp_tiempo_estimado').tooltip();
+    $('.exp_horas_estacion').tooltip();
+    $('.exp_fecha_respuesta').tooltip();
+    $('.exp_diferencia_tiempo').tooltip();
+
     $("#form_respuesta").submit(function() {
         $("#msj_respuesta").html('<img src="../img/cargando.gif" />');
         if ($("#respuesta").val() === '') {

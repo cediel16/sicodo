@@ -27,7 +27,9 @@ class expedientes {
         }
 
         $d = $db->data;
+        $timestamp_aux = $data['timestamp'];
         for ($i = 0; $i < count($d); $i++) {
+            $timestamp_aux = configuraciones::sumar_horas($timestamp_aux, $d[$i]['horas']);
             if ($i == 0) {
                 $testigo = 'si';
             } else {
@@ -41,7 +43,8 @@ class expedientes {
                 'descripcion' => $d[$i]['descripcion'],
                 'orden' => $d[$i]['orden'],
                 'horas' => $d[$i]['horas'],
-                'testigo' => $testigo
+                'testigo' => $testigo,
+                'timestamp' => $timestamp_aux
             );
             $db->db_insert('movimientos', $mov);
             if ($db->db_affected_rows() === 0) {
@@ -106,7 +109,6 @@ class expedientes {
             $busqueda.=" lower(a.titulo) like lower('%$buscar%') or";
             $busqueda.=" lower(a.descripcion) like lower('%$buscar%')";
             $busqueda.=" )";
-            
         }
         $db = new base();
         $db->db_query("
@@ -117,15 +119,17 @@ class expedientes {
             a.descripcion,
             a.status,
             a.timestamp,
+            (case when (select resp.timestamp from movimientos mov inner join respuestas resp on resp.movimiento_fkey=mov.id and mov.documento_fkey=a.id order by resp.timestamp desc limit 1) is NULL then 0 else (select resp.timestamp from movimientos mov inner join respuestas resp on resp.movimiento_fkey=mov.id and  mov.documento_fkey=a.id order by resp.timestamp desc limit 1) end) as ultima_respuesta,
             (select count(1) from movimientos where documento_fkey=a.id and ejecutado='si') as ejecutado,
             (select count(1) from movimientos where documento_fkey=a.id) as a_ejecutar
             from expedientes a
             inner join rutas b on b.id=a.ruta_fkey
             and a.status='$status'
             $busqueda
-            order by timestamp desc
+            order by ultima_respuesta desc,timestamp desc
             
             ");
+        //$db->db_last_query();
         $r.='<table class = "table table-condensed table-hover">';
         $r.='<thead>';
         $r.='<tr>';
@@ -151,7 +155,7 @@ class expedientes {
             $r.='<td><span class="pull-right">' . status($option, $db->fields['ejecutado'] . ' de ' . $db->fields['a_ejecutar']) . '</span></td>';
             $r.='<td>' . status($option, $db->fields['status']) . '</span></td>';
             $r.='<td><a href="' . site_url() . '/expedientes/view.php?var=' . $db->fields['documento_id'] . '">' . $db->fields['codigo'] . ' ' . $db->fields['titulo'] . ' - <span class="muted">' . $db->fields['descripcion'] . '</span></a></td>';
-            $r.='<td>' . expedientes::fecha($db->fields['timestamp']) . '</td>';
+            $r.='<td>' . expedientes::fecha((($db->fields['ultima_respuesta'] == '' || $db->fields['ultima_respuesta']==0) ? $db->fields['timestamp'] : $db->fields['ultima_respuesta'])) . '</td>';
             $r.='</tr>';
             $db->db_move_next();
         }
@@ -205,8 +209,7 @@ class expedientes {
             (select count(1) from movimientos where documento_fkey=a.id and ejecutado='si') as estaciones_cumplidas,
             (select count(1) from movimientos where documento_fkey=a.id) as total_estaciones,
             (select sum(horas) from movimientos where documento_fkey=a.id) as horas,
-            (select sum(horas) from movimientos where documento_fkey=a.id)/24 as dias
-            
+            (select sum(horas) from movimientos where documento_fkey=a.id)/" . configuraciones::total_dias_laborables() . " as dias            
             from expedientes a
             inner join rutas b on b.id=a.ruta_fkey
             where a.id=$id
@@ -248,6 +251,7 @@ class expedientes {
             a.testigo,
             a.descripcion,
             a.usuario_fkey,
+            a.timestamp,
             b.unidad,
             c.cargo,
             d.nombre as responsable
@@ -288,7 +292,7 @@ class expedientes {
 
     public static function fecha($f) {
         if (date('Ymd', $f) == date('Ymd')) {
-            return date('H:i a', $f);
+            return 'Hoy ' . date('h:i a', $f);
         } elseif (date('Ym', $f) == date('Ym')) {
             return date('d M', $f);
         } else {
@@ -297,4 +301,5 @@ class expedientes {
     }
 
 }
+
 ?>
