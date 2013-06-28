@@ -24,7 +24,8 @@ sesiones::is_has_permission('unidades.anadir');
 
 
 <?php
-//$mail = new email();
-//$mail->enviar('cedielj@alcaldiadeguacara.gob.ve', 'Prueba ' . date('d/m/Y - h:i:s a'), 'Esto es una prueba...');
+$email = new email();
+$r=$email->enviar('cedielj@alcaldiadeguacara.gob.ve', 'Prueba ' . date('d/m/Y - h:i:s a'), 'Esto es una prueba...');
+var_dump($r);
 //8,9,10,11,12,2,3,4,5
 ?>

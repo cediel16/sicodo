@@ -103,6 +103,19 @@ class expedientes {
     }
 
     public static function lista($status, $buscar) {
+        if (sesiones::is_has_permission('expedientes.ver.propios') && sesiones::is_has_permission('expedientes.ver.otros')) {
+            $filtro_permiso .= "and (";
+            $filtro_permiso .= "a.id in (select documento_fkey from movimientos where usuario_fkey=" . sesiones::userdata('id') . ") ";
+            $filtro_permiso .= "or ";
+            $filtro_permiso .= "a.id in (select documento_fkey from movimientos where usuario_fkey<>" . sesiones::userdata('id') . ")";
+            $filtro_permiso .= ")";
+        } elseif (sesiones::is_has_permission('expedientes.ver.propios') && !sesiones::is_has_permission('expedientes.ver.otros')) {
+            $filtro_permiso .= "and a.id in (select documento_fkey from movimientos where usuario_fkey=" . sesiones::userdata('id') . ") ";
+        } elseif (!sesiones::is_has_permission('expedientes.ver.propios') && sesiones::is_has_permission('expedientes.ver.otros')) {
+            $filtro_permiso .= "and a.id in (select documento_fkey from movimientos where usuario_fkey<>" . sesiones::userdata('id') . ") ";
+        } else {
+            return NULL;
+        }
         if ($buscar != '') {
             $busqueda = "and (";
             $busqueda.=" lower(a.codigo) like lower('%$buscar%') or";
@@ -125,11 +138,11 @@ class expedientes {
             from expedientes a
             inner join rutas b on b.id=a.ruta_fkey
             and a.status='$status'
+            $filtro_permiso
             $busqueda
             order by ultima_respuesta desc,timestamp desc
             
             ");
-        //$db->db_last_query();
         $r.='<table class = "table table-condensed table-hover">';
         $r.='<thead>';
         $r.='<tr>';
@@ -155,7 +168,7 @@ class expedientes {
             $r.='<td><span class="pull-right">' . status($option, $db->fields['ejecutado'] . ' de ' . $db->fields['a_ejecutar']) . '</span></td>';
             $r.='<td>' . status($option, $db->fields['status']) . '</span></td>';
             $r.='<td><a href="' . site_url() . '/expedientes/view.php?var=' . $db->fields['documento_id'] . '">' . $db->fields['codigo'] . ' ' . $db->fields['titulo'] . ' - <span class="muted">' . $db->fields['descripcion'] . '</span></a></td>';
-            $r.='<td>' . expedientes::fecha((($db->fields['ultima_respuesta'] == '' || $db->fields['ultima_respuesta']==0) ? $db->fields['timestamp'] : $db->fields['ultima_respuesta'])) . '</td>';
+            $r.='<td>' . expedientes::fecha((($db->fields['ultima_respuesta'] == '' || $db->fields['ultima_respuesta'] == 0) ? $db->fields['timestamp'] : $db->fields['ultima_respuesta'])) . '</td>';
             $r.='</tr>';
             $db->db_move_next();
         }

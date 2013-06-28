@@ -34,7 +34,7 @@ class email extends PHPMailer {
 
         //$this->AltBody = $cuerpo;
 
-        $this->Send();
+        return $this->Send();
     }
 
 }
